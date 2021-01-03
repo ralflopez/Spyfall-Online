@@ -1,0 +1,54 @@
+$font-family-sans-serif: 'Exo', sans-serif;
+$font-family-base: $font-family-sans-serif;
+
+$white:                         #E0E8EE;
+$black:                         #191919;
+
+$theme-colors: (
+  "primary": $white,
+  "danger": #E63946,
+  "success": #457B9D
+);
+
+$input-btn-padding-y:           .5rem;
+$input-btn-padding-x:           2rem;
+$btn-padding-y:                 $input-btn-padding-y;
+$btn-padding-x:                 $input-btn-padding-x;
+
+$input-padding-y:               $input-btn-padding-y*1.5;
+$input-padding-x:               $input-btn-padding-x/2;
+
+$input-bg:                      $black;
+$input-focus-bg:                $input-bg;
+$input-color:                   $white;
+$input-focus-color:             $input-color;
+$input-border-color:            $white;
+$input-box-shadow:              none;
+$input-border-width:            2px;
+
+$body-bg:                       $black;
+$body-color:                    $white;
+
+$border-radius:                 .5rem;
+$border-radius-lg:              .6rem;
+$border-radius-sm:              .3rem;
+
+$border-width:                  3px;
+$border-color:                  $white;
+
+$font-size-base:                1rem;
+$h1-font-size:                  $font-size-base * 7;
+$h2-font-size:                  $font-size-base * 5;
+$h3-font-size:                  $font-size-base * 3;
+$h4-font-size:                  $font-size-base * 2;
+
+$list-group-color:                  null;
+$list-group-bg:                     $black;
+$list-group-border-color:           $white;
+
+$custom-range-thumb-bg:                     red;
+
+@import '../../node_modules/bootstrap/scss/functions';
+@import '../../node_modules/bootstrap/scss/variables';
+@import '../../node_modules/bootstrap/scss/mixins';
+@import '../../node_modules/bootstrap/scss/bootstrap.scss';
