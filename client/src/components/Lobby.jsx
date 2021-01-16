@@ -16,6 +16,7 @@ function Lobby() {
     let [spyCount, setSpyCount] = useState(1);
 
     useEffect(() => {
+        console.log(2)
         //update player list
         socket.on('player_update', playerList => {
             setPlayers(playerList);
@@ -50,6 +51,12 @@ function Lobby() {
                 spy
             });
         });
+        
+        return () => {
+            socket.off('player_update');
+            socket.off('kicked');
+            socket.off('game_started');
+        }
     }, [history, room, username]);
 
     useEffect(() => {
@@ -57,6 +64,8 @@ function Lobby() {
         if(!res) return;
         if(res.username === username)
             setIsAdmin(true);
+        
+        return () => setIsAdmin(false)
     }, [players, username]);
 
     const startGame = () => {
@@ -152,14 +161,12 @@ function Lobby() {
                     variant="secondary" 
                     onClick={leaveGame}
                     className="mb-2"
-                    size="sm"
                 >Leave</Button>
                 {!!isAdmin 
                     ?   <Button 
                         variant="primary" 
                         disabled={players.length > 1 ? false : true}
                         onClick={startGame}
-                        size="sm"
                         className="ml-2 mb-2"
                         >Start</Button> : null
                 }
