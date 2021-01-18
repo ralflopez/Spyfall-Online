@@ -24,6 +24,7 @@ class GameLogic {
 
     //creat a new room
     createRoom = async () => {
+        console.log('FROM LOGIC CREATE')
         const code = randomstring({ 
             length: 6, 
             charset: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'

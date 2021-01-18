@@ -20,6 +20,7 @@ module.exports.addSocket = function (server) {
         });
 
         socket.on('create_room', async () => {
+            console.log('CREATE ROOM')
             const code = await GameMethod.createRoom();
             io.to(socket.id).emit('room_created', code);
         });
@@ -29,6 +30,7 @@ module.exports.addSocket = function (server) {
             
             //check existence
             const isExist = await GameMethod.doesRoomExist(room);
+
             if(!isAdmin && !isExist)
                 return io.to(socket.id).emit('is_room', false);
             io.to(socket.id).emit('is_room', true);
@@ -38,20 +40,18 @@ module.exports.addSocket = function (server) {
             await socket.join(user.room);
             
             const players = await GameMethod.getPlayers(user.room);
-            console.log(players);
+
             //load existing players
-            console.log('sending players')
+
             io.to(user.room).emit('player_update', players);
 
             //kick players
             socket.on('kick_player', async id => {
-                console.log(id);
                 io.to(id).emit('kicked');
             });
             
             //admin started the game
             socket.on('start', async ({category, time, spyCount}) => {
-                console.log(spyCount)
                 //choose game location and assign roles
                 const gameInfo = await GameMethod.assignRoles(user.room, category, spyCount);
 
@@ -93,16 +93,14 @@ module.exports.addSocket = function (server) {
         //client has left the room
         socket.on('exit_room', async () => {
             await GameMethod.exitRoom(socket.id);
-            console.log('exited')
+
             const players = await GameMethod.getPlayers(user.room);
-            console.log(players)
-            io.to(user.room).emit('player_update', players);
+            if(players.length > 0)
+                io.to(user.room).emit('player_update', players);
         });
 
         //client has disconnected
         socket.on('disconnect', async () => { 
-            console.log('a user has disconnected');
-            console.log(user);
             if(!user)
                 return 
             if(user.isAdmin) 

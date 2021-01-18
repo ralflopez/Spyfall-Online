@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import socket from '../utils/socketio';
 import { Alert, Button, Col, Container, Form, FormControl, FormGroup, FormLabel, Row } from 'react-bootstrap';
 import { Redirect, useHistory } from 'react-router-dom';
@@ -10,17 +10,27 @@ function Outdoor() {
     let history = useHistory();
     let [invalidCode, setInvalidCode] = useState(false);
 
-    const createRoomHandler = () => {
-        socket.emit('create_room');
+    useEffect(() => {
         socket.on('room_created', room => {
-            socket.emit('join_room', { username, room, isAdmin: true});
+            console.log('about to join room')
+            socket.emit('join_room', { username, room, isAdmin: true });
             socket.on('is_room', () => {
+                console.log('yes theres a room')
                 history.push({
                     pathname: '/lobby',
                     room
                 });
             });
+            console.log('after log')
         });
+        return () => {
+            socket.off('room_created');
+        }
+    }, [history, username]);
+
+    const createRoomHandler = () => {
+        console.log('create room handler')
+        socket.emit('create_room');
     }
 
     const joinRoomHandler = (e) => {
@@ -28,9 +38,9 @@ function Outdoor() {
         const room = e.target.elements.room;
         const code = room.value.toUpperCase().trim();
 
-        socket.emit('join_room', { username, room: code});
+        socket.emit('join_room', { username, room: code });
         socket.on('is_room', status => {
-            console.log(status)
+            console.log('yes room', status)
             if(status)
                 history.push({
                     pathname: '/lobby',

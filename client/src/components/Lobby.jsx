@@ -19,6 +19,7 @@ function Lobby() {
         console.log(2)
         //update player list
         socket.on('player_update', playerList => {
+            console.log(playerList);
             setPlayers(playerList);
         });
 
@@ -74,6 +75,7 @@ function Lobby() {
 
     const leaveGame = async () => {
         return new Promise((res) => {
+            console.log('i will exit na')
             socket.emit('exit_room');
             res(true);
         })
