@@ -12,16 +12,13 @@ function Outdoor() {
 
     useEffect(() => {
         socket.on('room_created', room => {
-            console.log('about to join room')
             socket.emit('join_room', { username, room, isAdmin: true });
             socket.on('is_room', () => {
-                console.log('yes theres a room')
                 history.push({
                     pathname: '/lobby',
                     room
                 });
             });
-            console.log('after log')
         });
         return () => {
             socket.off('room_created');
@@ -29,7 +26,6 @@ function Outdoor() {
     }, [history, username]);
 
     const createRoomHandler = () => {
-        console.log('create room handler')
         socket.emit('create_room');
     }
 
@@ -40,7 +36,6 @@ function Outdoor() {
 
         socket.emit('join_room', { username, room: code });
         socket.on('is_room', status => {
-            console.log('yes room', status)
             if(status)
                 history.push({
                     pathname: '/lobby',

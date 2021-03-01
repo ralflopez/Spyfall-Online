@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Col, Container, ListGroup, Row } from 'react-bootstrap';
+import { Button, Col, Container, ListGroup, Modal, Row } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';
 import socket from '../utils/socketio';
 import { useHistory } from 'react-router-dom';
@@ -9,6 +9,7 @@ function Game() {
     const { room, location, role, list, spy } = useLocation();
     let [timer, setTimer] = useState({min: 0, sec: 0});
     let [showRole, setShowRole] = useState(false);
+    let [reveal, setReveal] = useState(false);
     let history = useHistory();
 
     useEffect(() => {
@@ -22,6 +23,7 @@ function Game() {
 
         //detect game ends
         socket.on('game_ended', () => {
+            setReveal(true);
             // alert('the spy is ' + JSON.stringify(spy));
             // history.push({
             //     pathname: '/lobby',
@@ -29,6 +31,10 @@ function Game() {
             // });
         })
     }, [history, room, spy]);
+
+    const handleClose = () => {
+
+    }
 
     return (
         <Container className="pt-5 pb-5">
@@ -67,6 +73,25 @@ function Game() {
                 </ListGroup>
                 </Col>
             </Row>
+            <Modal
+                show={reveal}
+                onHide={handleClose}
+                backdrop="static"
+                keyboard={false}
+            >
+                <Modal.Header closeButton>
+                <Modal.Title>Game Over</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    Spy reveal yourself
+                </Modal.Body>
+                <Modal.Footer>
+                <Button variant="secondary" onClick={handleClose}>
+                    Close
+                </Button>
+                <Button variant="primary">Understood</Button>
+                </Modal.Footer>
+            </Modal>
         </Container>
     );
 }

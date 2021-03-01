@@ -20,7 +20,6 @@ module.exports.addSocket = function (server) {
         });
 
         socket.on('create_room', async () => {
-            console.log('CREATE ROOM')
             const code = await GameMethod.createRoom();
             io.to(socket.id).emit('room_created', code);
         });

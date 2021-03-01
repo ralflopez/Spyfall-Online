@@ -1,6 +1,5 @@
 import React from 'react';
-import './App.css';
-import './style/main.css';
+import './style/main.scss';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import UserContext from './components/c_user';
 import Welcome from './components/Welcome';
