@@ -3,7 +3,7 @@ const GameMethod = require('./gameLogic');
 
 const corsOrigin = {
     cors: {
-        origin: 'http://localhost:3000'
+        origin: process.env.NODE_ENV === 'production' ? 'https://play-spyfall-online.herokuapp.com' : 'http://localhost:3000'
     }
 }
 
