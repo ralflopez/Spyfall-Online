@@ -4,6 +4,7 @@ const server = require('http').createServer(app);
 const socket = require('./utils/sockets');
 const connectdb = require('./utils/mongodb-config');
 const cors = require('cors');
+const path = require('path');
 
 connectdb();
 
@@ -13,7 +14,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 if(process.env.NODE_ENV === 'production') {
-    app.use(express.static('client/build'))
+    app.use(express.static(path.join(__dirname, 'client', 'build')));
 ;}
 
 //server
@@ -22,7 +23,7 @@ socket.addSocket(server);
 const PORT = process.env.PORT || 5000;
 
 server.listen(PORT, () => {
-    console.log('server running');
+    console.log('server running at port ' + PORT);
 });
 
 module.exports = server;
