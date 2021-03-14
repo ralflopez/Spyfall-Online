@@ -1,6 +1,6 @@
 import io from 'socket.io-client';
 
-const ENDPOINT = 'http://localhost:5000';
+const ENDPOINT = 'https://play-spyfall-online.herokuapp.com/';
 const socket = io(ENDPOINT);
 
 export default socket;
