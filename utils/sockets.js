@@ -1,14 +1,14 @@
 const socketio = require('socket.io');
 const GameMethod = require('./gameLogic');
 
-const corsOrigin = {
-    cors: {
-        origin: process.env.NODE_ENV === 'production' ? 'https://play-spyfall-online.herokuapp.com' : 'http://localhost:3000'
-    }
-}
+// const corsOrigin = {
+//     cors: {
+//         origin: process.env.NODE_ENV === 'production' ? 'https://play-spyfall-online.herokuapp.com' : 'http://localhost:3000'
+//     }
+// }
 
 module.exports.addSocket = function (server) {
-    const io = socketio(server, corsOrigin);
+    const io = socketio(server);
 
     //client connected
     io.on('connection', socket => {

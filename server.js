@@ -17,6 +17,10 @@ if(process.env.NODE_ENV === 'production') {
     app.use(express.static(path.join(__dirname, 'client', 'build')));
 ;}
 
+app.get('/', (req, res) => {
+    res.json('hello im spy');
+})
+
 //server
 socket.addSocket(server);
 
